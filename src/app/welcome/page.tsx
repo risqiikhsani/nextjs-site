@@ -14,7 +14,7 @@ const navigation = [
   { name: 'Company', href: '#' },
 ]
 
-export default function Home() {
+export default function Welcome() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
