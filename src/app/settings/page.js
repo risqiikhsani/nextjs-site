@@ -1,4 +1,4 @@
-export default function Setting(params) {
+export default function Page(params) {
     return(
         <p>setting</p>
     )
