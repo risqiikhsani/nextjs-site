@@ -1,13 +1,8 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { Roboto } from "next/font/google";
+import Navbar from "@/ui/Navbar";
 
-import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
-import Box from "@mui/material/Box";
-
-import { DRAWER_WIDTH } from "@/styles/Styles";
-
-import NavbarMUI from "@/ui/NavbarMUI";
 
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({
@@ -30,11 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <ThemeRegistry>
-          <NavbarMUI>
-            {children}
-          </NavbarMUI>
-        </ThemeRegistry>
+        <Navbar/>
+        <div className="container px-4 pt-4 mx-auto">
+        {children}
+        </div>
       </body>
     </html>
   );

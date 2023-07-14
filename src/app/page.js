@@ -1,14 +1,12 @@
-"use client"
-
+import React from "react"
 
 
 export default function Page(props) {
+
+
   return (
     <>
-      <p>homepage</p>
-      <h1 className="text-3xl font-bold underline">
-      Hello world!
-      </h1>
+
       <p>From they fine john he give of rich he. They age and draw mrs like. Improving end distrusts may instantly was household applauded incommode. Why kept very ever home mrs. Considered sympathize ten uncommonly occasional assistance sufficient not. Letter of on become he tended active enable to. Vicinity relation sensible sociable surprise screened no up as.
 
 Do greatest at in learning steepest. Breakfast extremity suffering one who all otherwise suspected. He at no nothing forbade up moments. Wholly uneasy at missed be of pretty whence. John way sir high than law who week. Surrounded prosperous introduced it if is up dispatched. Improved so strictly produced answered elegance is.
