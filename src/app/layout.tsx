@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 
 import { DRAWER_WIDTH } from "@/styles/Styles";
 
+import { SessionProvider } from "next-auth/react"
 import NavbarMUI from "@/ui/NavbarMUI";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -30,11 +31,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
+        <SessionProvider>
         <ThemeRegistry>
           <NavbarMUI>
             {children}
           </NavbarMUI>
         </ThemeRegistry>
+        </SessionProvider>
       </body>
     </html>
   );
