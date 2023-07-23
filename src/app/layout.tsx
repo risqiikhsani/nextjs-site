@@ -1,14 +1,13 @@
+import { Session } from 'next-auth';
+import { Inter, Roboto } from "next/font/google";
+import { headers } from 'next/headers';
 import "./globals.css";
-import { Inter } from "next/font/google";
-import { Roboto } from "next/font/google";
 
-import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
-import Box from "@mui/material/Box";
+import ThemeRegistryMaterialUI from "@/components/ThemeRegistry/ThemeRegistry";
 
-import { DRAWER_WIDTH } from "@/styles/Styles";
 
-import { SessionProvider } from "next-auth/react"
 import NavbarMUI from "@/ui/NavbarMUI";
+
 
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({
@@ -23,21 +22,16 @@ export const metadata = {
 
 
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function RootLayout({children}: {children: React.ReactNode;}) {
+
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <SessionProvider>
-        <ThemeRegistry>
+        <ThemeRegistryMaterialUI>
           <NavbarMUI>
             {children}
           </NavbarMUI>
-        </ThemeRegistry>
-        </SessionProvider>
+        </ThemeRegistryMaterialUI>
       </body>
     </html>
   );

@@ -10,10 +10,6 @@ export const authOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
-    GithubProvider({
-      clientId: process.env.GITHUB_ID as string,
-      clientSecret: process.env.GITHUB_SECRET as string,
-    }),
     // ...add more providers here
     CredentialsProvider({
       // The name to display on the sign in form (e.g. 'Sign in with...')
@@ -39,16 +35,21 @@ export const authOptions = {
           headers: { "Content-Type": "application/json" }
         })
         const user = await res.json()
+        
   
         // If no error and we have user data, return it
+        
         if (res.ok && user) {
           return user
         }
         // Return null if user data could not be retrieved
         return null
+
+
       }
     })
   ],
+  debug:process.env.NODE_ENV === "development"
   // pages: {
   //   signIn: '/auth/login',
   //   signOut: '/auth/logout',
