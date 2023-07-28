@@ -5,6 +5,8 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { auth_api } from "@/api/auth";
+import { setCookie } from "@/api/cookies";
+import { useAuth } from "@/context/Auth";
 
 interface FormData {
   username: string;
@@ -12,6 +14,7 @@ interface FormData {
 }
 
 export default function LoginForm() {
+const {authenticated,handleLoginSuccess} = useAuth()
   const [formData, setFormData] = React.useState<FormData>({
     username: "",
     password: "",
@@ -28,6 +31,11 @@ export default function LoginForm() {
   const onSubmit = async () => {
     try {
       const response = await auth_api.login(formData);
+      setCookie("access_token",response.data.access_token,7)
+      setCookie("refresh_token",response.data.refresh_token,30)
+      if(!authenticated){
+        handleLoginSuccess()
+      }
       console.log(response.data);
     } catch (error) {
       console.log(error);

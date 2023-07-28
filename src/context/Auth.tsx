@@ -2,6 +2,7 @@
 
 import { my } from "@/api/app";
 import {auth_api} from "@/api/auth";
+import { deleteCookie, setCookie } from "@/api/cookies";
 import { clearUserProfile, setUserProfile } from "@/redux/slices/userProfileSlice";
 import { clearUser, setUser } from "@/redux/slices/userSlice";
 import { RootState } from "@/redux/types";
@@ -39,6 +40,8 @@ interface Props {
   children: ReactNode;
 }
 
+
+
 export function AuthHandler({ children }: Props) {
   const [authenticated,setAuthenticated] = useState(false)
   const router = useRouter(); 
@@ -49,6 +52,7 @@ export function AuthHandler({ children }: Props) {
   const user = useSelector((state:RootState) => state.user)
 
   const getUserData = async (): Promise<boolean> => {
+    console.log("getUserData is running")
     try {
       // get user
       const response = await my.get_user();
@@ -71,6 +75,7 @@ export function AuthHandler({ children }: Props) {
   };
 
   const getUserProfileData = async (): Promise<boolean> => {
+    console.log("getUserProfileData is running")
     try {
       // get user
       const response = await my.get_profile();
@@ -93,6 +98,8 @@ export function AuthHandler({ children }: Props) {
 
   const logoutUser = () => {
     // Perform the logout logic (e.g., remove cookies, clear local storage)
+    deleteCookie("access_token")
+    deleteCookie("refresh_token")
     // ...
   
     // Clear user data and set authenticated to false
@@ -102,9 +109,11 @@ export function AuthHandler({ children }: Props) {
   };
 
   const handleLoginSuccess = async () => {
+    console.log("handleLoginSuccess is running")
+    // Set cookies or perform any other login logic
+    // ...
+    
     try {
-      // Set cookies or perform any other login logic
-      // ...
   
       // Fetch user data and user profile data simultaneously using Promise.all
       const [userDataSuccess, userProfileDataSuccess] = await Promise.all([
@@ -147,6 +156,8 @@ export function AuthHandler({ children }: Props) {
         console.error('Error fetching data:', error);
       });
   }, []);
+
+
 
   return (
     <>

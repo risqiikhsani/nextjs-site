@@ -34,3 +34,16 @@ export function getCookie(name: string): string | null {
     return null;
   }
 }
+
+export function deleteCookie(name: string): void {
+  try {
+    const date = new Date();
+    date.setTime(date.getTime() - 1); // Set expiration date to the past (one millisecond ago)
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = `${name}=; ${expires}; path=/`;
+  } catch (error) {
+    // Handle the error gracefully, e.g., log the error, show a user-friendly message, or silently ignore it.
+    console.error("Error deleting cookie:", error);
+  }
+}
+

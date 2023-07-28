@@ -7,6 +7,7 @@ import ThemeRegistryMaterialUI from "@/components/ThemeRegistry/ThemeRegistry";
 
 
 import NavbarMUI from "@/ui/NavbarMUI";
+import { AuthHandler } from '@/context/Auth';
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -46,11 +47,13 @@ export default async function RootLayout(props: Props) {
   return (
     <html lang="en">
       <body className={roboto.className}>
+        <AuthHandler>
         <ThemeRegistryMaterialUI>
           <NavbarMUI>
             {props.children}
           </NavbarMUI>
         </ThemeRegistryMaterialUI>
+        </AuthHandler>
       </body>
     </html>
   );
