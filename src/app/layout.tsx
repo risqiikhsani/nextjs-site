@@ -22,14 +22,33 @@ export const metadata = {
 
 
 
-export default async function RootLayout({children}: {children: React.ReactNode;}) {
+// export default async function RootLayout({children}: {children: React.ReactNode;}) {
+
+//   return (
+//     <html lang="en">
+//       <body className={roboto.className}>
+//         <ThemeRegistryMaterialUI>
+//           <NavbarMUI>
+//             {children}
+//           </NavbarMUI>
+//         </ThemeRegistryMaterialUI>
+//       </body>
+//     </html>
+//   );
+// }
+
+export interface Props {
+  children: React.ReactNode,
+}
+
+export default async function RootLayout(props: Props) {
 
   return (
     <html lang="en">
       <body className={roboto.className}>
         <ThemeRegistryMaterialUI>
           <NavbarMUI>
-            {children}
+            {props.children}
           </NavbarMUI>
         </ThemeRegistryMaterialUI>
       </body>
