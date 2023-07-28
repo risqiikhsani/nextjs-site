@@ -1,11 +1,11 @@
 "use client";
 
 import { my } from "@/api/app";
-import {auth_api} from "@/api/auth";
-import { deleteCookie, setCookie } from "@/api/cookies";
+import { deleteCookie } from "@/api/cookies";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { clearUserProfile, setUserProfile } from "@/redux/slices/userProfileSlice";
 import { clearUser, setUser } from "@/redux/slices/userSlice";
-import { RootState } from "@/redux/types";
+
 
 import { useRouter } from "next/navigation";
 import {
@@ -15,7 +15,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 export interface IAuthContext {
   authenticated: boolean;
@@ -45,11 +44,11 @@ interface Props {
 export function AuthHandler({ children }: Props) {
   const [authenticated,setAuthenticated] = useState(false)
   const router = useRouter(); 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();  
 
   const registerUser = () => {};
 
-  const user = useSelector((state:RootState) => state.user)
+  const user = useAppSelector((state) => state.user)
 
   const getUserData = async (): Promise<boolean> => {
     console.log("getUserData is running")

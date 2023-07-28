@@ -1,14 +1,11 @@
-import { Session } from 'next-auth';
 import { Inter, Roboto } from "next/font/google";
-import { headers } from 'next/headers';
 import "./globals.css";
 
-import ThemeRegistryMaterialUI from "@/components/ThemeRegistry/ThemeRegistry";
-
-
-import NavbarMUI from "@/ui/NavbarMUI";
 import { AuthHandler } from '@/context/Auth';
+import NavbarMUI from "@/ui/NavbarMUI";
 
+import { ReduxProviders } from "@/redux/provider";
+import ThemeRegistryMaterialUI from "@/components/ThemeRegistry/ThemeRegistry";
 
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({
@@ -47,6 +44,7 @@ export default async function RootLayout(props: Props) {
   return (
     <html lang="en">
       <body className={roboto.className}>
+        <ReduxProviders>
         <AuthHandler>
         <ThemeRegistryMaterialUI>
           <NavbarMUI>
@@ -54,6 +52,7 @@ export default async function RootLayout(props: Props) {
           </NavbarMUI>
         </ThemeRegistryMaterialUI>
         </AuthHandler>
+        </ReduxProviders>
       </body>
     </html>
   );
