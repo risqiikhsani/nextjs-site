@@ -1,17 +1,17 @@
-"use client"
 
 import { useAuth } from "@/context/Auth";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter,redirect } from "next/navigation";
+import { useEffect } from "react";
+
 
 export function withRestrictedAccess(WrappedComponent) {
   const ComponentWithAuth = (props) => {
     const { authenticated } = useAuth();
-    const router = useRouter();
+    
 
     useEffect(() => {
       if(!authenticated){
-        router.push('/login');
+        redirect('/login');
       }
     }, [authenticated]);
 

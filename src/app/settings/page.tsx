@@ -1,9 +1,8 @@
-import {withRestrictedAccess} from '@/components/withRestrictedAccess'
-
-function Page() {
-    return(
-        <p>setting</p>
-    )
+export default function Page() {
+  return (
+    <>
+      <p>settings</p>
+      <p></p>
+    </>
+  );
 }
-
-export default withRestrictedAccess(Page)

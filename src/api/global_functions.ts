@@ -5,10 +5,15 @@ import { getCookie,setCookie } from "./cookies";
 export async function refreshAccessToken() {
   try {
     const refresh_token = getCookie("refresh_token");
+    console.log("token : "+refresh_token)
 
     // Make a request to your backend or authentication server to refresh the token
-    const response = await auth_api.refresh_access_token(refresh_token);
-    const new_access_token = response.data.access_token;
+    const data = {
+      refresh:refresh_token
+    }
+    const response = await auth_api.refresh_access_token(data);
+    const new_access_token = response.data.access;
+    console.log("new access token : "+new_access_token)
 
     // Save the new access token to your storage (e.g., localStorage, Redux store)
     // Replace 'your_access_token_storage_key' with your actual storage key

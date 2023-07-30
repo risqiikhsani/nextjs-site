@@ -17,6 +17,7 @@ import forgotPasswordReducer from "./slices/forgotPasswordSlice";
 //   },
 // });
 
+//https://codevoweb.com/setup-redux-toolkit-in-nextjs-13-app-directory/
 export const store = configureStore({
   reducer: {
     user: userReducer,

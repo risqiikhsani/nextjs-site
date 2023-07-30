@@ -6,6 +6,8 @@ import NavbarMUI from "@/ui/NavbarMUI";
 
 import { ReduxProviders } from "@/redux/provider";
 import ThemeRegistryMaterialUI from "@/components/ThemeRegistry/ThemeRegistry";
+import {NavigationEvents} from '@/components/navigation-events'
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({
@@ -53,6 +55,9 @@ export default async function RootLayout(props: Props) {
         </ThemeRegistryMaterialUI>
         </AuthHandler>
         </ReduxProviders>
+        <Suspense fallback={null}>
+        <NavigationEvents/>
+        </Suspense>
       </body>
     </html>
   );

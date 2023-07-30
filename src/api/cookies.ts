@@ -7,12 +7,14 @@ export function setCookie(
     const date = new Date();
     date.setTime(date.getTime() + expirationDays * 24 * 60 * 60 * 1000); // Convert days to milliseconds
     const expires = "expires=" + date.toUTCString();
-    document.cookie = `${name}=${token}; ${expires}; path=/`;
+    const cookieValue = `${name}=${token}; ${expires}; path=/; SameSite=Strict; secure`;
+    document.cookie = cookieValue;
   } catch (error) {
     // Handle the error gracefully, e.g., log the error, show a user-friendly message, or silently ignore it.
     console.error("Error setting cookie:", error);
   }
 }
+
 
 export function getCookie(name: string): string | null {
   try {
