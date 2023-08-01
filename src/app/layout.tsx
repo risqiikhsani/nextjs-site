@@ -1,7 +1,7 @@
 import { Inter, Roboto } from "next/font/google";
 import "./globals.css";
 
-import { AuthHandler } from '@/context/Auth';
+import { AuthHandler, useAuth } from '@/context/Auth';
 import NavbarMUI from "@/ui/NavbarMUI";
 
 import { ReduxProviders } from "@/redux/provider";
@@ -49,9 +49,7 @@ export default async function RootLayout(props: Props) {
         <ReduxProviders>
         <AuthHandler>
         <ThemeRegistryMaterialUI>
-          <NavbarMUI>
             {props.children}
-          </NavbarMUI>
         </ThemeRegistryMaterialUI>
         </AuthHandler>
         </ReduxProviders>

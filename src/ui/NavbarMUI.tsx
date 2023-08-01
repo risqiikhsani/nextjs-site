@@ -1,16 +1,18 @@
-"use client"
+"use client";
 
-import { DRAWER_WIDTH } from '@/styles/Styles';
-import MenuIcon from '@mui/icons-material/Menu';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import Toolbar from '@mui/material/Toolbar';
-import * as React from 'react';
-import Header from './Header';
-import LeftDrawer from './LeftDrawer';
+import { DRAWER_WIDTH } from "@/styles/Styles";
+import MenuIcon from "@mui/icons-material/Menu";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import Toolbar from "@mui/material/Toolbar";
+import * as React from "react";
+import Header from "./Header";
+import LeftDrawer from "./LeftDrawer";
+import { useAuth } from "@/context/Auth";
+import { Typography } from "@mui/material";
 
 interface Props {
   /**
@@ -22,6 +24,7 @@ interface Props {
 }
 
 export default function NavbarMUI(props: Props) {
+  const { authenticated } = useAuth();
   const { window, children } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -29,10 +32,22 @@ export default function NavbarMUI(props: Props) {
     setMobileOpen(!mobileOpen);
   };
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
+
+  if(!authenticated){
+    return(
+      <>
+        <Box sx={{display:"flex"}}>
+        {children}
+        </Box>
+      </>
+    )
+  }
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
+      
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -47,7 +62,7 @@ export default function NavbarMUI(props: Props) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ mr: 2, display: { sm: "none" } }}
           >
             <MenuIcon />
           </IconButton>
@@ -69,8 +84,11 @@ export default function NavbarMUI(props: Props) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: DRAWER_WIDTH },
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: DRAWER_WIDTH,
+            },
           }}
         >
           <LeftDrawer />
@@ -78,8 +96,11 @@ export default function NavbarMUI(props: Props) {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: DRAWER_WIDTH },
+            display: { xs: "none", sm: "block" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: DRAWER_WIDTH,
+            },
           }}
           open
         >
@@ -88,7 +109,11 @@ export default function NavbarMUI(props: Props) {
       </Box>
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${DRAWER_WIDTH}px)` } }}
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          width: { sm: `calc(100% - ${DRAWER_WIDTH}px)` },
+        }}
       >
         <Toolbar />
         {children}
