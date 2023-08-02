@@ -1,3 +1,6 @@
+"use client"
+
+import { useAuth } from '@/context/Auth';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -7,9 +10,11 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Account', 'Dashboard'];
 
 export default function Header() {
+
+    const {logoutUser} = useAuth()
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -53,6 +58,9 @@ export default function Header() {
                             <Typography textAlign="center">{setting}</Typography>
                         </MenuItem>
                     ))}
+                    <MenuItem key={4} onClick={() => {handleCloseUserMenu();logoutUser()}}>
+                        <Typography textAlign="center">Logout</Typography>
+                    </MenuItem>
                 </Menu>
             </Box>
         </>

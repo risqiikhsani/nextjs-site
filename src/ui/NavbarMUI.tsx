@@ -24,7 +24,7 @@ interface Props {
 }
 
 export default function NavbarMUI(props: Props) {
-  const { authenticated } = useAuth();
+
   const { window, children } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -35,15 +35,6 @@ export default function NavbarMUI(props: Props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
-  if(!authenticated){
-    return(
-      <>
-        <Box sx={{display:"flex"}}>
-        {children}
-        </Box>
-      </>
-    )
-  }
 
   return (
     <Box sx={{ display: "flex" }}>

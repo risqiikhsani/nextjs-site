@@ -1,5 +1,7 @@
+import SignupForm from "./form";
+
 export default function Page(){
     return(
-        <p>Signup</p>
+        <SignupForm/>
     )
 }
