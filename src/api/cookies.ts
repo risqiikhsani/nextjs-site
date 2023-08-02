@@ -1,13 +1,13 @@
 export function setCookie(
   name: string,
-  token: string,
+  value: string | boolean,
   expirationDays: number
 ): void {
   try {
     const date = new Date();
     date.setTime(date.getTime() + expirationDays * 24 * 60 * 60 * 1000); // Convert days to milliseconds
     const expires = "expires=" + date.toUTCString();
-    const cookieValue = `${name}=${token}; ${expires}; path=/; SameSite=Strict; secure`;
+    const cookieValue = `${name}=${value}; ${expires}; path=/; SameSite=Strict; secure`;
     document.cookie = cookieValue;
   } catch (error) {
     // Handle the error gracefully, e.g., log the error, show a user-friendly message, or silently ignore it.

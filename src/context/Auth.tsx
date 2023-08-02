@@ -1,35 +1,35 @@
 "use client";
 
 import { my } from "@/api/app";
-import { deleteCookie } from "@/api/cookies";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { deleteCookie, setCookie } from "@/api/cookies";
+import { useAppDispatch } from "@/redux/hooks";
 import { clearUserProfile, setUserProfile } from "@/redux/slices/userProfileSlice";
 import { clearUser, setUser } from "@/redux/slices/userSlice";
-
-
+import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
+
+
 import {
   ReactNode,
   createContext,
   useContext,
-  useEffect,
-  useState,
+  useEffect
 } from "react";
 
 export interface IAuthContext {
-  authenticated: boolean;
+
   handleLoginSuccess: () => void;
   logoutUser: () => void;
 }
 
 
 const authContextDefaultValues: IAuthContext = {
-  authenticated: false,
+
   handleLoginSuccess: () => {},
   logoutUser: () => {},
 };
 
-const AuthContext = createContext<IAuthContext>(authContextDefaultValues);
+export const AuthContext = createContext<IAuthContext>(authContextDefaultValues);
 
 export function useAuth() {
   return useContext(AuthContext);
@@ -42,14 +42,8 @@ interface Props {
 
 
 export function AuthHandler({ children }: Props) {
-  const [authenticated,setAuthenticated] = useState(false)
-  const router = useRouter(); 
   const dispatch = useAppDispatch();  
-
-  const registerUser = () => {};
-
-  const user = useAppSelector((state) => state.user)
-
+  const router = useRouter()
   const getUserData = async (): Promise<boolean> => {
     console.log("getUserData is running")
     try {
@@ -99,12 +93,15 @@ export function AuthHandler({ children }: Props) {
     // Perform the logout logic (e.g., remove cookies, clear local storage)
     deleteCookie("access_token")
     deleteCookie("refresh_token")
+    deleteCookie("authenticated")
     // ...
   
     // Clear user data and set authenticated to false
     dispatch(clearUser());
     dispatch(clearUserProfile());
-    setAuthenticated(false);
+
+    return router.refresh()
+    
   };
 
   const handleLoginSuccess = async () => {
@@ -122,7 +119,8 @@ export function AuthHandler({ children }: Props) {
   
       // If both fetches are successful, set the authenticated state to true
       if (userDataSuccess && userProfileDataSuccess) {
-        setAuthenticated(true);
+        setCookie("authenticated",true,7)
+        return router.refresh()
       } else {
         // Handle the case when either or both fetches failed
         // (e.g., show an error message or perform some other actions)
@@ -136,7 +134,7 @@ export function AuthHandler({ children }: Props) {
   };
 
   const value = {
-    authenticated,
+ 
     handleLoginSuccess,
     logoutUser,
   };
@@ -147,7 +145,7 @@ export function AuthHandler({ children }: Props) {
       .then(([userDataSuccess, userProfileDataSuccess]) => {
         // If both fetches are successful, set the authenticated state to true
         if (userDataSuccess && userProfileDataSuccess) {
-          setAuthenticated(true);
+          setCookie("authenticated",true,7)
         }
       })
       .catch((error) => {

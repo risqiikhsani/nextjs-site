@@ -1,9 +1,8 @@
 
 
-import { useAuth } from "@/context/Auth";
 import NavbarMUI from "@/ui/NavbarMUI";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { useEffect, useState } from 'react';
 
 export interface Props {
   children: React.ReactNode;
@@ -11,7 +10,12 @@ export interface Props {
 
 export default async function Layout(props: Props) {
 
+  const cookiesList = cookies()
+  const hasAuthenticated = cookiesList.has('authenticated')
 
+  if(!hasAuthenticated){
+    return redirect("/auth/login")
+  }
 
   return <NavbarMUI>{props.children}</NavbarMUI>;
 }

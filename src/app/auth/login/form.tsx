@@ -1,21 +1,28 @@
 "use client"
 
-import * as React from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack, Typography } from "@mui/material";
 import { auth_api } from "@/api/auth";
 import { setCookie } from "@/api/cookies";
 import { useAuth } from "@/context/Auth";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import * as React from "react";
+import { useState } from 'react';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import AlertBase from "@/components/alert/alert";
+
 interface FormData {
   username: string;
   password: string;
 }
 
 export default function LoginForm() {
-  const { authenticated, handleLoginSuccess } = useAuth()
+  const { handleLoginSuccess } = useAuth()
+  const [showError, setShowError] = useState(false)
+  const [errorMsg, setErrorMsg] = useState("");
   const [formData, setFormData] = React.useState<FormData>({
     username: "",
     password: "",
@@ -41,12 +48,15 @@ export default function LoginForm() {
       const response = await auth_api.login(formData);
       setCookie("access_token", response.data.access_token, 7)
       setCookie("refresh_token", response.data.refresh_token, 30)
-      if (!authenticated) {
-        handleLoginSuccess()
-      }
+      handleLoginSuccess()
+
       console.log(response.data);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      setShowError(true);
+
+      // Access the error message using optional chaining and nullish coalescing
+      const errorMessage = error?.response?.data?.error ?? "An error occurred. Please try again later.";
+      setErrorMsg(errorMessage);
     }
   };
 
@@ -64,6 +74,9 @@ export default function LoginForm() {
       autoComplete="off"
     >
       <Typography>LOGIN</Typography>
+      
+      {showError && <AlertBase open={showError} onClose={() => setShowError(false)} text={errorMsg} severity="error" />}
+
       <TextField
         id="outlined-username"
         label="Username"
