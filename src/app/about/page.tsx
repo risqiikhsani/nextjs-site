@@ -1,4 +1,5 @@
 import About from './about'
+import AboutContent from '@/contents/mdx/AboutContent.mdx'
 
 
 // async function getPosts() {
@@ -34,6 +35,10 @@ export default async function Page(){
     const stats = await getStats()
 
     return(
-        <About links={links} stats={stats}/>
+        <>
+                {/* <About links={links} stats={stats}/> */}
+        <AboutContent/>
+        </>
+
     )
 }
